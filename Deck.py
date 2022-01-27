@@ -2,8 +2,8 @@
 
 from random import shuffle
 
-from Card import Card
-from Suits import all_suits
+from .Card import Card
+from .Suits import all_suits
 
 class Deck:
         """A standard 52 card deck. No jokers.

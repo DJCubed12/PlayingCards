@@ -1,8 +1,8 @@
 """Hand class with algorithms to determine value."""
 
-from Card import Card, sort_cards
-import PokerHands
-from Suits import all_suits
+from .Card import Card, sort_cards
+from . import PokerHands
+from .Suits import all_suits
 
 
 class Hand:
@@ -23,11 +23,12 @@ class Hand:
             strs.append(str(card))
         return strs
 
-    def __str__(self):
-        strs = ""
-        for card in self.cards:
-            strs += str(card) + ', '
-        return strs[:-2]
+    def copy(self):
+        """Shallow copy of the hand. Creates a new Hand using the same Card objects."""
+        new_cards = []
+        for c in self.cards:
+            new_cards.append(c)
+        return Hand(new_cards)
 
 
     def make_histograms(self):
@@ -207,3 +208,9 @@ class Hand:
 
     def __len__(self):
         return len(self.cards)
+
+    def __str__(self):
+        strs = ""
+        for card in self.cards:
+            strs += str(card) + ', '
+        return strs[:-2]

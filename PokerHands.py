@@ -1,6 +1,6 @@
 """Houses the PokerHand base class (high card hand) and its subclasses (every other hand type in poker). Also, hand_hierarchy, which defines what hands are best."""
 
-from Card import Card, sort_cards
+from .Card import Card, sort_cards
 
 
 class PokerHand:
@@ -47,9 +47,20 @@ class PokerHand:
             if self.__class__ is other.__class__:
                 # Same type of poker hand
                 for i in range(5):
-                    if self.cards[i] < other.cards[i]:
+                    try:
+                        this_card = self.cards[i]
+                        other_card = other.cards[i]
+                    except IndexError:
+                        if len(self.cards) < len(other.cards):
+                            return True
+                        elif len(self.cards) > len(other.cards):
+                            raise False
+                        else:
+                            raise self.EqualHands(self, other)
+
+                    if this_card < other_card:
                         return True
-                    elif self.cards[i] > other.cards[i]:
+                    elif this_card > other_card:
                         return False
                     # They are equal, go to next
                     self.tested_high = True
@@ -72,9 +83,20 @@ class PokerHand:
             if self.__class__ is other.__class__:
                 # Same type of poker hand
                 for i in range(5):
-                    if self.cards[i] > other.cards[i]:
+                    try:
+                        this_card = self.cards[i]
+                        other_card = other.cards[i]
+                    except IndexError:
+                        if len(self.cards) > len(other.cards):
+                            return True
+                        elif len(self.cards) < len(other.cards):
+                            raise False
+                        else:
+                            raise self.EqualHands(self, other)
+
+                    if this_card > other_card:
                         return True
-                    elif self.cards[i] < other.cards[i]:
+                    elif this_card < other_card:
                         return False
                     # They are equal, go to next
                     self.tested_high = True

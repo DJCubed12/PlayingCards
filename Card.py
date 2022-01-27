@@ -1,6 +1,6 @@
 """Player Card class."""
 
-from Suits import all_suits
+from .Suits import all_suits
 
 
 def sort_cards(cards: list):
